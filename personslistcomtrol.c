@@ -46,7 +46,7 @@ void displayfordelete(person p){
     };
 
 void deleteperson(person persons[], int *person_count, int index){
-    if (index<0 || index> *person_count)
+    if (index<=0 || index>*person_count)
     {
         printf("invalid person number");
         return;
@@ -56,7 +56,7 @@ void deleteperson(person persons[], int *person_count, int index){
         persons[i] = persons[i+1];
      }
     (*person_count)--;
-    printf("person number %d deleted\n", index);
+    printf("person number %d deleted successfully.\n", index);
 }
 
  int main(){
@@ -93,6 +93,12 @@ do
         break;
 
         case 2:
+        if (person_count == 0)
+        {
+            printf("no person to delete. \n");
+        }
+        else
+        {
             for (int i = 0; i < person_count; i++)
             {
                 printf("person %d :\n", i+1);
@@ -101,6 +107,7 @@ do
             printf("enter a person number to delete ... (1 to %d)", person_count);
             scanf("%d", &index);
             deleteperson(persons, &person_count, index);
+        }
         break;
 
         case 3:
@@ -125,7 +132,6 @@ do
     } while (choice != 5);
 
  }
-
 
 
 
