@@ -3,135 +3,253 @@
 
 typedef struct  
 {
-    char street[20];
-    char city[20];
+    char street[50];
+    char city[50];
     int code_postal;
 }adr;
 
 typedef struct
 {
-    char name[20];
+    char name[50];
     int age;
     adr Adress;
 }person;
 
-void createPerson(person *p1)
+void createPerson(person *p) // function to create new persons
 {
-    printf("name :");
-    scanf("%s", p1->name);
-    printf("age :");
-    scanf("%d", &p1->age);
-    printf("adress :(street)");
-    scanf("%s", p1->Adress.street);
-    printf("adress :(city)");
-    scanf("%s", p1->Adress.city);
-    printf("adress :(code postal)");
-    scanf("%d", &p1->Adress.code_postal);
+    printf("Name : ");
+    scanf("%49s", p->name);
+
+    printf("Age : ");
+    scanf("%d", &p->age);
+
+    printf("Adress (Street) : ");
+    scanf("%49s", p->Adress.street);
+
+    printf("Adress (City) : ");
+    scanf("%49s", p->Adress.city);
+
+    printf("Adress (Code Postal) : ");
+    scanf("%d", &p->Adress.code_postal);
+
     printf("-------------------------\n");
-};
-
-void display(person p){
-        
-        printf("name : %s\n", p.name);
-        printf("age : %d\n", p.age);
-        printf("adress(street) :%s\n", p.Adress.street);
-        printf("adress(city) :%s\n", p.Adress.city);
-        printf("adress(code postal) :%d\n", p.Adress.code_postal);
-        printf("--------------------------\n");
-    };
-
-void displayfordelete(person p){
-        printf("name : %s\n", p.name);
-        printf("--------------------------\n");
-    };
-
-void deleteperson(person persons[], int *person_count, int index){
-    if (index<=0 || index>*person_count)
-    {
-        printf("invalid person number");
-        return;
-    }
-     for (int i = index-1; i < *person_count-1; i++)
-     {
-        persons[i] = persons[i+1];
-     }
-    (*person_count)--;
-    printf("person number %d deleted successfully.\n", index);
 }
 
- int main(){
-    
+void display(person p){ //function to display the list of members 
+        
+        printf("Name : %s\n", p.name);
+        printf("Age : %d\n", p.age);
+        printf("Adress(Street) :%s\n", p.Adress.street);
+        printf("Adress(City) :%s\n", p.Adress.city);
+        printf("Adress(Code Postal) :%d\n", p.Adress.code_postal);
+        printf("--------------------------\n");
+}
+
+void displayForDelete(person p){ //function to display members names only for deleting
+        printf("Name : %s\n", p.name);
+        printf("--------------------------\n");
+}
+
+void deletePerson(person persons[], int *person_count, int index){// function to delete memebrs
+    if (index<1 || index>*person_count)
+    {
+        printf("Invalid person number");
+        return;
+    }
+
+    for (int i = index-1; i < *person_count-1; i++)
+    {
+        persons[i] = persons[i+1];
+    }
+    (*person_count)--;
+
+    printf("Person number %d deleted successfully.\n", index);
+    printf("--------------------------\n");
+}
+
+ int main()
+{ 
     person persons[100]; //array to store created persons
     int choice; //to take the choice of the user about what to do next
     int x; //numbers to control how many persons to add
-    int person_count = 0;
+    int person_count = 0; // to track the total of persons i have so far
     int index; // number to choose who to delete
-do
-{
-    printf("what's next ?\n");
-    printf("1. add a person\n");
-    printf("2. delete a person\n");
-    printf("3. modify a person\n");
-    printf("4. display \n");
-    printf("5. exit\n");
-    scanf("%d", &choice);
-    printf("-----------------------------\n");
+    int index2; // number to choose who to modify 
+    int choice2; // number to choose what to modify
 
-    switch (choice)
+    do
     {
-    case 1:
-        
-        printf("how many persons u wanna create ?");
-        scanf("%d", &x);
-        printf("add a person\n");
-        for (int i = 0; i < x; i++)
-            {
-                printf("person %d\n", person_count+1);
-                createPerson(&persons[person_count]);
-                person_count++;
-            }
-        break;
+        printf("What's next ?\n");
+        printf("1. add a person\n");
+        printf("2. delete a person\n");
+        printf("3. modify a person\n");
+        printf("4. display \n");
+        printf("0. exit\n");
+        scanf("%d", &choice);
+        printf("-----------------------------\n");// list to ask the user chat he wanna do 
 
-        case 2:
-        if (person_count == 0)
+        switch (choice)
         {
-            printf("no person to delete. \n");
+            case 1: //adding a new person
+                printf("How many persons would you like to add ?\n");
+                scanf("%d", &x);
+
+                for (int i = 0; i < x; i++)
+                {
+                    printf("Person %d\n", person_count+1);
+                    createPerson(&persons[person_count]);
+                    person_count++;
+                }
+            break;
+
+            case 2:
+                if (person_count == 0)
+                {
+                    printf("No person to delete. \n");
+                    printf("---------------------\n");
+                }
+
+                else
+                {
+                    for (int i = 0; i < person_count; i++)
+                    {
+                        printf("Person %d :\n", i+1);
+                        displayForDelete(persons[i]);
+                    }
+
+                        printf("Enter a person number to delete ... (1 to %d)\n", person_count);
+                        scanf("%d", &index);
+
+                    if (index <1 || index > person_count)
+                    {
+                        printf("Invalid choice. Please select a valid option.");
+                        printf("--------------------------------------------\n");
+                    }
+
+                    else
+                    {
+                        deletePerson(persons, &person_count, index);
+                    }
+                }
+                break;
+
+            case 3:
+                if (person_count == 0)
+                {
+                    printf("There is no person to modify\n");
+                    printf("-----------------------------\n");
+                }
+
+                else
+                {
+                    for (int i = 0; i < person_count; i++)
+                    {
+                        printf("Person %d :\n", i+1);
+                        displayForDelete(persons[i]);
+                    }
+
+                        printf("Which person you want to modify ? ... (1 to %d)\n", person_count);
+                        scanf("%d", &index2);
+
+                    if (index2<1 || index2>person_count)
+                    {
+                        printf("Invalid choice. Please select a valid option.");
+                        printf("--------------------------------------------\n");
+                    }
+
+                    else
+                    {
+                        do
+                        {
+                            display(persons[index2-1]);
+                            printf("What do you want to modify ?\n");
+                            printf("1. name\n");
+                            printf("2. age\n");
+                            printf("3. street\n");
+                            printf("4. city\n");
+                            printf("5. code postal\n");
+                            printf("0. back\n");
+                            scanf("%d", &choice2);
+                            printf("--------------------------\n");
+
+                            switch (choice2)
+                            {
+                                case 1: //modifying name
+                                    printf("Previous name : %s\n", persons[index2-1].name);
+                                    printf("Enter the new name ?\n");
+                                    scanf("%49s", persons[index2-1].name);
+                                    printf("--------------------------\n");
+                                break;
+
+                                case 2: //modifying age
+                                    printf("Previous age: %d\n", persons[index2-1].age);
+                                    printf("Enter the new age ?\n");
+                                    scanf("%d", &persons[index2-1].age);
+                                    printf("--------------------------\n");
+                                break;
+                                        
+                                case 3: // modifying street
+                                    printf("Previous street: %s\n", persons[index2-1].Adress.street);
+                                    printf("Enter the new street ?\n");
+                                    scanf("%49s", &persons[index2-1].Adress.street);
+                                    printf("--------------------------\n");
+                                break;
+
+                                case 4: // modifying city
+                                    printf("Previous city: %s\n", persons[index2-1].Adress.city);
+                                    printf("Enter the new city ?\n");
+                                    scanf("%49s", &persons[index2-1].Adress.city);
+                                    printf("--------------------------\n");
+                                break;
+
+                                case 5: // modifying code postral
+                                    printf("Previous code postal: %d\n", persons[index2-1].Adress.code_postal);
+                                    printf("Enter the new code postal ?\n");
+                                    scanf("%d", &persons[index2-1].Adress.code_postal);
+                                    printf("--------------------------\n");
+                                break;
+
+                                default:
+                                    printf("Invalid choice. Please select a valid option.");
+                                    printf("--------------------------------------------\n");
+                                break;
+                            }
+
+                        } while (choice2 != 0);
+                    }
+                }
+            break;
+
+            case 4:
+                if (person_count == 0)
+                {
+                    printf("There is no person to display\n");
+                    printf("------------------------------\n");
+                }
+
+                else
+                {
+                    for (int i = 0; i < person_count; i++)
+                    {
+                        printf("Person %d :\n", i+1);
+                        display(persons[i]);
+                    }
+                }
+            break;
+
+            case 0:
+                printf("Exiting...\n");
+            break;
+            
+            default:
+                printf("Invalid choice. Please select a valid option.\n");
+                printf("----------------------------------------------\n");
+            break;
         }
-        else
-        {
-            for (int i = 0; i < person_count; i++)
-            {
-                printf("person %d :\n", i+1);
-                displayfordelete(persons[i]);
-            }
-            printf("enter a person number to delete ... (1 to %d)", person_count);
-            scanf("%d", &index);
-            deleteperson(persons, &person_count, index);
-        }
-        break;
+    } while (choice != 0);
 
-        case 3:
-        
-        break;
-
-        case 4:
-            for (int i = 0; i < person_count; i++)
-            {
-                printf("person %d :\n", i+1);
-                display(persons[i]);
-            }
-        break;
-
-        case 5:
-            printf("exiting...\n");
-        break;
-    
-    default:
-        break;
-    }
-    } while (choice != 5);
-
- }
+    return 0;
+}
 
 
 
