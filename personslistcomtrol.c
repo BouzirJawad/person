@@ -86,15 +86,15 @@ void deletePerson(person persons[], int *person_count, int index){// function to
         printf("4. display \n");
         printf("0. exit\n");
         scanf("%d", &choice);
-        printf("-----------------------------\n");// list to ask the user chat he wanna do 
+        printf("-----------------------------\n");// list to ask the user what he wanna do 
 
         switch (choice)
         {
             case 1: //adding a new person
                 printf("How many persons would you like to add ?\n");
-                scanf("%d", &x);
+                scanf("%d", &x);//number for how many persons to create
 
-                for (int i = 0; i < x; i++)
+                for (int i = 0; i < x; i++)//making new persons
                 {
                     printf("Person %d\n", person_count+1);
                     createPerson(&persons[person_count]);
@@ -102,8 +102,8 @@ void deletePerson(person persons[], int *person_count, int index){// function to
                 }
             break;
 
-            case 2:
-                if (person_count == 0)
+            case 2://deleting persons
+                if (person_count == 0)//validating that there is members to delete
                 {
                     printf("No person to delete. \n");
                     printf("---------------------\n");
@@ -111,16 +111,16 @@ void deletePerson(person persons[], int *person_count, int index){// function to
 
                 else
                 {
-                    for (int i = 0; i < person_count; i++)
+                    for (int i = 0; i < person_count; i++)//displaying all memebers to choose who to delete
                     {
                         printf("Person %d :\n", i+1);
                         displayForDelete(persons[i]);
                     }
 
                         printf("Enter a person number to delete ... (1 to %d)\n", person_count);
-                        scanf("%d", &index);
+                        scanf("%d", &index);//choosing a person number to delete
 
-                    if (index <1 || index > person_count)
+                    if (index <1 || index > person_count)//validating that the users pick a valid choice
                     {
                         printf("Invalid choice. Please select a valid option.");
                         printf("--------------------------------------------\n");
@@ -128,13 +128,13 @@ void deletePerson(person persons[], int *person_count, int index){// function to
 
                     else
                     {
-                        deletePerson(persons, &person_count, index);
+                        deletePerson(persons, &person_count, index);//deleting the chosen one
                     }
                 }
                 break;
 
             case 3:
-                if (person_count == 0)
+                if (person_count == 0)//validating that there is members to modify
                 {
                     printf("There is no person to modify\n");
                     printf("-----------------------------\n");
@@ -142,22 +142,22 @@ void deletePerson(person persons[], int *person_count, int index){// function to
 
                 else
                 {
-                    for (int i = 0; i < person_count; i++)
+                    for (int i = 0; i < person_count; i++)//displaying members to choose who to modify
                     {
                         printf("Person %d :\n", i+1);
                         displayForDelete(persons[i]);
                     }
 
                         printf("Which person you want to modify ? ... (1 to %d)\n", person_count);
-                        scanf("%d", &index2);
+                        scanf("%d", &index2);//taking the number of person to modify
 
-                    if (index2<1 || index2>person_count)
+                    if (index2<1 || index2>person_count)//making sure user picks a valid user
                     {
                         printf("Invalid choice. Please select a valid option.");
                         printf("--------------------------------------------\n");
                     }
 
-                    else
+                    else//starting modifying code
                     {
                         do
                         {
@@ -170,7 +170,7 @@ void deletePerson(person persons[], int *person_count, int index){// function to
                             printf("5. code postal\n");
                             printf("0. back\n");
                             scanf("%d", &choice2);
-                            printf("--------------------------\n");
+                            printf("--------------------------\n");//list to choose what to modify
 
                             switch (choice2)
                             {
@@ -209,19 +209,19 @@ void deletePerson(person persons[], int *person_count, int index){// function to
                                     printf("--------------------------\n");
                                 break;
 
-                                default:
+                                default://error msg for user if he chooses wrong one
                                     printf("Invalid choice. Please select a valid option.");
                                     printf("--------------------------------------------\n");
                                 break;
                             }
 
-                        } while (choice2 != 0);
+                        } while (choice2 != 0);//to keep code running as long as user don't pick 0 to exit
                     }
                 }
             break;
 
             case 4:
-                if (person_count == 0)
+                if (person_count == 0)//validating that there is members to display
                 {
                     printf("There is no person to display\n");
                     printf("------------------------------\n");
@@ -229,7 +229,7 @@ void deletePerson(person persons[], int *person_count, int index){// function to
 
                 else
                 {
-                    for (int i = 0; i < person_count; i++)
+                    for (int i = 0; i < person_count; i++)//displaying memebers
                     {
                         printf("Person %d :\n", i+1);
                         display(persons[i]);
@@ -237,17 +237,17 @@ void deletePerson(person persons[], int *person_count, int index){// function to
                 }
             break;
 
-            case 0:
+            case 0:// 0 to stop the app
                 printf("Exiting...\n");
             break;
             
-            default:
+            default://error code if the user takes invalid choice
                 printf("Invalid choice. Please select a valid option.\n");
                 printf("----------------------------------------------\n");
             break;
         }
-    } while (choice != 0);
-
+    } while (choice != 0);//to keep code running as long as user don't pick 0 to exit
+                    
     return 0;
 }
 
